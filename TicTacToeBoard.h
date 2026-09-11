@@ -19,16 +19,15 @@ public:
 
     Player getPlayer(Player player);
 
-    void makeMove(int x, int y, Player player);
+    void makeMove(Player player);
 
     bool isWinningMove();
     
     bool isBoardFull();
     
+    bool isValidMove(int x, int y);
 
 private:
     char board[3][3]; 
     set<Player> players;
-
-    bool isValidMove(int x, int y);
 };

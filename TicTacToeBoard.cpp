@@ -67,9 +67,28 @@ bool TicTacToeBoard::isWinningMove() {
 	return false;
 }
 
-void TicTacToeBoard::makeMove(int x, int y, Player player) {
-	if (isValidMove(x, y)) {
-		board[x][y] = player.getSymbol();
+void TicTacToeBoard::makeMove(Player player) {
+	bool notValid = true;
+	string xInput, yInput;
+	int x, y;
+	cout << player.getName() << "'s Turn!\n";
+
+	while (notValid) {
+		cout << "Enter the X-Coordinates of where you wish to place your marker:\n";
+		cin >> xInput;
+		cout << "Enter the Y-Coordinates of where you wish to place your marker:\n";
+		cin >> yInput;
+
+		x = stoi(xInput) - 1;
+		y = stoi(yInput) - 1;
+
+		if (!isValidMove(x, y)) {
+			cout << "Invalid move. Try again.\n";
+		}
+		else {
+			board[x][y] = player.getSymbol();
+			notValid = false;
+		}
 	}
 }
 

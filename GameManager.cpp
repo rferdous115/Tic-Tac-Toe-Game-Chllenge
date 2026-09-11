@@ -9,7 +9,7 @@ void GameManager::runGame() {
 	int boardSize;
 
 	cout << "Welcome to TicTacToe!\n\n";
-
+	
 	cout << "The first player should now enter their name:\n";
 	cin >> p1Name;
 	cout << "Hello " << p1Name << "!\n";
@@ -42,35 +42,29 @@ void GameManager::runGame() {
 	bool isGameOver = false;
 	bool playerOneWins;
 
+	Player currentPlayer = tictactoeBoard.getPlayer(playerOne);
+	bool turn = true; // true = P1's turn. false = P2's turn.
+
 	while (!isGameOver) {
-		string xInput, yInput;
-		cout << playerOne.getName() << "'s Turn!\n";
-		cout << "Enter the X-Coordinates of where you wish to place your marker:\n";
-		cin >> xInput;
-		cout << "Enter the Y-Coordinates of where you wish to place your marker:\n";
-		cin >> yInput;
-		tictactoeBoard.makeMove(stoi(xInput) - 1, stoi(yInput) - 1, tictactoeBoard.getPlayer(playerOne));
+		
+		if (turn) {
+			currentPlayer = tictactoeBoard.getPlayer(playerOne);
+		}
+		else {
+			currentPlayer = tictactoeBoard.getPlayer(playerTwo);
+		}
+		
+		tictactoeBoard.makeMove(currentPlayer);
 		tictactoeBoard.printBoard();
+		
 		isGameOver = tictactoeBoard.isWinningMove() || tictactoeBoard.isBoardFull();
+		
 		if (isGameOver) {
-			playerOneWins = true;
-			cout << playerOne.getName() << " wins!\n";
+			cout << currentPlayer.getName() << " wins!\n";
 ;			break;
 		}
 
-		cout << playerTwo.getName() << "'s Turn!\n";
-		cout << "Enter the X-Coordinates of where you wish to place your marker:\n";
-		cin >> xInput;
-		cout << "Enter the Y-Coordinates of where you wish to place your marker:\n";
-		cin >> yInput;
-		tictactoeBoard.makeMove(stoi(xInput) - 1, stoi(yInput) - 1, tictactoeBoard.getPlayer(playerTwo));
-		tictactoeBoard.printBoard();
-		isGameOver = tictactoeBoard.isWinningMove() || tictactoeBoard.isBoardFull();
-		if (isGameOver) {
-			playerOneWins = false;
-			cout << playerTwo.getName() << " wins!\n";
-			break;
-		}
+		turn = !turn;
 	}
 
 	cout << "Game Over\n";
